@@ -1,8 +1,39 @@
-<header class="pb-3 mb-4 border-bottom">
-			<a href="./welcome.jsp"	class="d-flex align-items-center text-dark text-decoration-none">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
-  <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
-</svg>
-				<span class="fs-4">Home</span>
-			</a>
-		</header>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <!-- JSTL 코어태그 c 사용 가능하도록 선언 -->
+
+<link rel="stylesheet" href="css/style.css"> 
+<div class="nav-bar">
+<div class="nav-title">Book Market.</div>
+<div class="nav-btn">
+<div class="nav-btn-item"><a href="index.jsp">홈</a></div>
+  
+
+  <c:choose>
+	 <c:when test="${empty sessionScope.sessionId}">
+          <div class="nav-btn-item"><a href="login.jsp">로그인</a></div>
+          <div class="nav-btn-item"><a href="join.jsp">회원가입</a></div>
+                <!--로그인 여부에 따라 메뉴 다르게 표시하기 위한 조건문  empty sessionScope.sessionId : 세션에 sessionId가 없으면 = 로그인 안한상태  -->
+            </c:when>
+        
+        
+   
+  	   <c:otherwise>              
+  	        <!-- 로그인 한 상태이면 아래 메뉴 출력  -->  
+           <div class="nav-btn-item">  ${sessionScope.sessionId}님 환영합니다! </div>
+           <div class="nav-btn-item"><a href="#">도서 목록</a></div>
+     	   <div class="nav-btn-item"><a href="#">회원 게시판</a></div>
+           <div class="nav-btn-item"><a href="updateMember.jsp">회원정보수정</a></div>
+           <div class="nav-btn-item"><a href="deleteMember.jsp">회원탈퇴</a></div>
+                
+                
+               
+                <c:if test="${sessionScope.role eq 'admin'}">
+                 <!--  입력한 아이디가 세션의 속성인 role 에서  admin이 일치하면 관리자모드 메뉴. -->
+                	<div class="nav-btn-item"><a href="adminDashboard.jsp">관리자모드</a></div>
+                </c:if>
+                
+                <div class="nav-btn-item"> <a href="logout.jsp">로그아웃</a></div>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>
